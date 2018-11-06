@@ -43,10 +43,14 @@ public class DurationFetcher extends AsyncTask<String, Void, Long> {
                 stringBuffer.append(line);
             }
 
-            JSONObject jsonObject = new JSONObject(stringBuffer.toString()).getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
-            Long result = jsonObject.getJSONObject("duration_in_traffic").getLong("value");
+            try{
+                JSONObject jsonObject = new JSONObject(stringBuffer.toString()).getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
+                Long result = jsonObject.getJSONObject("duration_in_traffic").getLong("value");
+                return result;
+            } catch (Exception e){
+                return Long.valueOf(1);
+            }
 
-            return result;
         } catch (Exception ex) {
             Log.e("App", "DurationFetcher", ex);
             return null;
