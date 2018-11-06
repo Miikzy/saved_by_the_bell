@@ -44,7 +44,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         Event event = mEvents.get(position);
         name.setText(event.getName());
-        date.setText(event.getDate());
+        date.setText(event.getDate().toString());
         location.setText(event.getLocation());
         if(event.getDescr() == null || event.getDescr() == ""){
             descr.setText("Il n'y a pas de description...");
@@ -52,10 +52,10 @@ public class EventAdapter extends ArrayAdapter<Event> {
             descr.setText(event.getDescr());
         }
 
-        if(event.getDepartureTime() == null || event.getDepartureTime() == ""){
+        if(event.getDepartureTime() == null || event.getDepartureTime().toString() == ""){
             departure_time.setText("A calculer...");
         } else {
-            descr.setText(event.getDepartureTime());
+            descr.setText(event.getDepartureTime().toString());
         }
 
 

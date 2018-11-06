@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -119,9 +120,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             events.add(new Event(cursor.getString(1),
-                    cursor.getString(2),
+                    new Date(cursor.getLong(2)),
                     cursor.getString(3),
-                    cursor.getString(4)));
+                    cursor.getString(4),
+                    new Date(cursor.getLong(5))));
             cursor.moveToNext();
         }
         cursor.close();
@@ -130,8 +132,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Event(String name, String date, String category, String time, String descr)
     //INSERT INTO event VALUES(4,'name', "date","location", "descr", "departure");
-    public void addEventinDB(String name, String date, String location, String descr, int id) {
-        myDataBase.execSQL("INSERT INTO event VALUES(" + id + ", \"" + name + "\", \"" + date + "\", \"" + location + "\", \"" + descr + "\", \"" + ""
+    public void addEventinDB(String name, Date date, String location, String descr, int id, Date departure_time) {
+        myDataBase.execSQL("INSERT INTO event VALUES(" + id + ", \"" + name + "\", \"" + date.getTime() + "\", \"" + location + "\", \"" + descr + "\", \"" + departure_time.getTime()
                 + "\");");
         System.out.println("coucou");
     }

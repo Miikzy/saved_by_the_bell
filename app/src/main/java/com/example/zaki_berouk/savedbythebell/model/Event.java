@@ -1,18 +1,30 @@
 package com.example.zaki_berouk.savedbythebell.model;
 
+import com.example.zaki_berouk.savedbythebell.DurationFetcher;
+
+import java.util.Date;
+
 public class Event {
 
     private String name;
-    private String date;
+    private Date date;
     private String location;
     private String descr;
-    private String departureTime;
+    private Date departureTime;
 
-    public Event(String name, String date, String location, String descr) {
+    public Event(String name, Date date, String location, String descr) {
         this.name = name;
         this.date = date;
         this.location = location;
         this.descr = descr;
+    }
+
+    public Event(String name, Date date, String location, String descr, Date departureTime) {
+        this.name = name;
+        this.date = date;
+        this.location = location;
+        this.descr = descr;
+        this.departureTime = departureTime;
     }
 
     public String getName() {
@@ -23,11 +35,11 @@ public class Event {
         this.name = name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -47,11 +59,11 @@ public class Event {
         this.descr = descr;
     }
 
-    public String getDepartureTime() {
+    public Date getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
 }
