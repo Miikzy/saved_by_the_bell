@@ -55,7 +55,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         if(event.getDepartureTime() == null || event.getDepartureTime().toString() == ""){
             departure_time.setText("A calculer...");
         } else {
-            descr.setText(event.getDepartureTime().toString());
+            departure_time.setText(event.getDepartureTime().toString());
         }
 
 
