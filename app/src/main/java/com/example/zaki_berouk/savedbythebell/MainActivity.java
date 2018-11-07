@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -49,6 +50,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -56,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.LOCATION_SERVICE;
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private String API_KEY;
     private List<Event> events = new ArrayList<>();
     private Button add_event;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -99,6 +103,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Properties properties = new Properties();
+        AssetManager assetManager = this.getAssets();
+        try {
+            InputStream inputStream = assetManager.open("app.properties");
+            properties.load(inputStream);
+            API_KEY = properties.getProperty("api_key");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -243,7 +258,7 @@ public class MainActivity extends AppCompatActivity
                         Event new_Event = new Event(nameEvent, dateEvent, locationEvent, descrEvent);
                         String loc = lastLocation.getLatitude() + "," + lastLocation.getLongitude();
                         try {
-                            Long duration = new DurationFetcher().execute(loc, locationEvent, dateEvent.getTime() + "").get();
+                            Long duration = new DurationFetcher().execute(API_KEY, loc, locationEvent, dateEvent.getTime() + "").get();
                             Log.d(TAG, "onClick: " + duration + " secondes");
                             cal.setTimeInMillis(cal.getTimeInMillis() - duration * 1000);
                             Date departureDate = cal.getTime();

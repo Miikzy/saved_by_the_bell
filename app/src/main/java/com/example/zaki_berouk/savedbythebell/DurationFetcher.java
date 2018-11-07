@@ -1,6 +1,7 @@
 package com.example.zaki_berouk.savedbythebell;
 
 
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -8,12 +9,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Properties;
 
 public class DurationFetcher extends AsyncTask<String, Void, Long> {
-    private static final String API_KEY = "AIzaSyB4Ug3HPkzhQh4ZUPo8KQQkhR5KgoOaifg";
 
 
     @Override
@@ -24,10 +26,12 @@ public class DurationFetcher extends AsyncTask<String, Void, Long> {
 
     @Override
     protected Long doInBackground(String... params) {
-        String urlString = "https://maps.googleapis.com/maps/api/directions/json?key=" + API_KEY;
-        urlString += "&origin=" + params[0];
-        urlString += "&destination=" + params[1].replace(" ", "+");
-        urlString += "&departure_time=" + params[2];
+        String urlString = "https://maps.googleapis.com/maps/api/directions/json?key=" + params[0];
+        urlString += "&origin=" + params[1];
+        urlString += "&destination=" + params[2].replace(" ", "+");
+        urlString += "&departure_time=" + params[3];
+
+        Log.d("DurationFetcher", "doInBackground: " + urlString);
 
         URLConnection urlConn = null;
         BufferedReader bufferedReader = null;

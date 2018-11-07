@@ -1,7 +1,5 @@
 package com.example.zaki_berouk.savedbythebell.model;
 
-import com.example.zaki_berouk.savedbythebell.DurationFetcher;
-
 import java.util.Date;
 
 public class Event {
